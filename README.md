@@ -43,6 +43,24 @@ NAME                          READY   STATUS    RESTARTS   AGE
 hello-world-b5f79bc75-wkvxl   1/1     Running   0          19m
 ```
 
+### Aufgabe 2
+1. Erstellen der Applikation in NestJS.
+```bash
+nest new project-name
+```
+2. Dockerfile und Image von Applikation erstellen (Wie Aufgabe 1.2 und 1.3).
+3. Manifeste Erstellen und Anwenden wie in Aufgabe 1.4 und 1.5.
+4. Testen der Microservices.
+```bash
+kubectl -n aktt1 port-forward pod/product-service-b65694644-rwnwl 3005:3000
+
+lzainzinger@MacBook-Air-von-Lukas AKTT1_G8 % curl 127.0.0.1:3005/products
+[{"id":1,"name":"Product A","price":100},{"id":2,"name":"Product B","price":200}]% 
+```
+5. Interaktion zwischen Microservices entwickeln.
+6. Testen der gesamten Applikation.
+7. Applikation Optimieren und 12 Factor App berücksichtigen.
+
 ## Authors
 Gruppe 8
 - Lukas Zainzinger - [@lzainzinger](https://www.github.com/lzainzinger)
