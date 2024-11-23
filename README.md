@@ -16,6 +16,18 @@ Dieses Repository beinhaltet alle benötigten Abgabedokumente für das Projekt d
 
 - Aufgabe 4: Templating (10 % der Beurteilung, optional)
 
+## Contributing
+
+Default Development Branch ist `develop` daher bitte folgendes beachten:
+
+```bash
+git checkout develop
+git pull
+git checkout -b feature/AufgabeX-teilaufgabe
+```
+
+Beim Abschluss einen PR auf `develop` erstellen und ein Review beantragen.
+
 ## Documentation
 
 Hier wird die Vorgehensweise für das Projekt dokumentiert.
