@@ -32,7 +32,7 @@ spec:
             - name: PRODUCTS_JSON
               valueFrom:
                 configMapKeyRef:
-                  name: product-config
+                  name: product-service
                   key: products.json
           ports:
             - containerPort: 3000
