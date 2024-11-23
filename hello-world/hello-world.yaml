@@ -36,9 +36,10 @@ metadata:
   namespace: aktt1
 spec:
   selector:
-    app.kubernetes.io/name: hello-world
+    app: hello-world
   ports:
     - protocol: TCP
-      port: 8082
+      port: 8085
       targetPort: 80
+  type: LoadBalancer
           
