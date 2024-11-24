@@ -41,6 +41,8 @@ Hier wird die Vorgehensweise für das Projekt dokumentiert.
 docker build -t lzainzinger02/hello-world:1.0.1 .
 docker push lzainzinger02/hello-world:1.0.1
 ```
+Wenn man keinen Tag angibt direkt, dann muss ein Tag nachträglich mit 'docker tag hello-world ctadeshsb/hello-world:1.0.0' erstellt werden. Danach kann nach einem 'docker logi, ein 'docker push' erfolgen 
+
 4. Manifestfiles erstellen in diesem fall `Deployment`und `Service`, zusätlich für das Setup ein `Namespace`Manifest.
 5. Manifest anwenden:
 ```bash
