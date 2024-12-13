@@ -188,9 +188,16 @@
       return {
         products: [],
         cart: [],
+        // Determine the base URL based on the environment
+        getBaseUrl() {
+            // If running locally, use localhost with NodePort; otherwise, use the service URL in Kubernetes
+            return window.location.hostname === "localhost"
+              ? "http://localhost:30001"  // Local development using NodePort
+              : "http://product-service:3001"; // Use this when running in Kubernetes
+        },
         async fetchProducts() {
           try {
-            const response = await fetch('http://product-service:3001/products');  // Use service name
+            const response = await fetch(`${this.getBaseUrl()}/products`);  // Use the dynamic base URL
             if (response.ok) {
               this.products = await response.json();
             } else {
