@@ -28,7 +28,7 @@ jobs:
         id: get-version
         run: |
           git fetch --tags # Ensure all tags are fetched
-          version=$(git describe --tags --abbrev=0 --exact-match 2>/dev/null || git describe --tags --always --dirty)
+          version=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null || git rev-parse --short HEAD)
           echo "::set-output name=version::$version"
 
       - name: Build and Tag Docker Images
