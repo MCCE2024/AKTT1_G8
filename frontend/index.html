@@ -190,7 +190,7 @@
         cart: [],
         async fetchProducts() {
           try {
-            const response = await fetch('http://product-service/products');  // Use service name
+            const response = await fetch('http://product-service:3001/products');  // Use service name
             if (response.ok) {
               this.products = await response.json();
             } else {
