@@ -26,7 +26,20 @@ git pull
 git checkout -b feature/AufgabeX-teilaufgabe
 ```
 
-Beim Abschluss einen PR auf `develop` erstellen und ein Review beantragen.
+Bevor ein PR erstellt wird muss eine neue Release erstellt werden.
+Die Versionsnummer sollte dem Semantic Versioning Modells folgen:
+
+Given a version number **MAJOR.MINOR.PATCH**, increment the:
+
+*MAJOR* version when you make incompatible API changes
+*MINOR* version when you add functionality in a backward compatible manner
+*PATCH* version when you make backward compatible bug fixes
+
+Hierzu auf der Repository Startseite rechts auf "Releases" klicken, dann oben rechts auf "Draft a new Release", dann bei "Choose a tag" in der Suchleiste den neuen TAG eingeben und auf **+ Create a new tag** klicken. Als target den **feature/** Branch auswählen. Zuletzt auf **Publish Release**!
+
+Abschließend einen PR auf `develop` erstellen und ein Review beantragen.
+
+:information_source: : Beim erstellen eines PR auf `develop` läuft nun eine Pipeline die **automatisch den build und push auf DockerHub unter lzainzinger02/ macht.**
 
 ## Documentation
 
