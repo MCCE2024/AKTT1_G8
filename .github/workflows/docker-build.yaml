@@ -40,8 +40,7 @@ jobs:
             version=${{ steps.get-version.outputs.version }}
             echo "Building Docker image for directory: $dir"
             docker build "$dir" -t "lzainzinger02/$image_name:latest" \
-                                 -t "lzainzinger02/$image_name:$version" \
-                                 --platform linux/amd64,linux/arm64
+                                 -t "lzainzinger02/$image_name:$version"
           done < directories.txt
 
       - name: Log in to DockerHub
