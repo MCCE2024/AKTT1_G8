@@ -1,0 +1,63 @@
+name: Build Docker Images
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+jobs:
+  build-docker-images:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Find directories with Dockerfiles
+        id: find-dirs
+        run: |
+          dirs=$(find . -type f -name Dockerfile -exec dirname {} \;)
+          echo "::set-output name=dirs::$dirs"
+
+      - name: Determine Image Version
+        id: get-version
+        run: |
+          if [ -n "${{ github.event.head_commit.id }}" ]; then
+            version=$(git describe --tags --always --dirty)
+          else
+            version=$(date +%Y%m%d%H%M%S)
+          fi
+          echo "::set-output name=version::$version"
+
+      - name: Build and Tag Docker Images
+        env:
+          DOCKER_BUILDKIT: 1
+        run: |
+          for dir in ${{ steps.find-dirs.outputs.dirs }}; do
+            image_name=$(basename "$dir")
+            version=${{ steps.get-version.outputs.version }}
+            echo "Building Docker image for directory: $dir"
+            docker build "$dir" -t "lzainzinger02/$image_name:latest" \
+                                 -t "lzainzinger02/$image_name:$version"
+          done
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker Images
+        run: |
+          for dir in ${{ steps.find-dirs.outputs.dirs }}; do
+            image_name=$(basename "$dir")
+            version=${{ steps.get-version.outputs.version }}
+            echo "Pushing Docker image: lzainzinger02/$image_name:latest"
+            echo "Pushing Docker image: lzainzinger02/$image_name:$version"
+            docker push "lzainzinger02/$image_name:latest"
+            docker push "lzainzinger02/$image_name:$version"
+          done
