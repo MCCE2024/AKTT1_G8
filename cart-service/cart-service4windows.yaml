@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: cart-service
-          image: ctadeshsb/cart-service:1.0.0
+          image: ctadeshsb/cart-service:1.1.0
           env:
             - name: CART_CONFIG_PATH
               value: /etc/config/cart.json  # This should point to where the ConfigMap file is mounted

@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: lzainzinger02/product-service:1.0.0
+          image: lzainzinger02/product-service:1.1.0
           env:
             - name: PRODUCTS_JSON
               valueFrom:
@@ -56,3 +56,5 @@ spec:
     - protocol: TCP
       port: 3001
       targetPort: 3000
+      nodePort: 30001  # Exposed NodePort
+  type: NodePort
