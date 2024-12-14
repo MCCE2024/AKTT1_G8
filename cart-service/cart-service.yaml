@@ -16,6 +16,7 @@ spec:
       containers:
         - name: cart-service
           image: lzainzinger02/cart-service:1.1.1
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           resources:

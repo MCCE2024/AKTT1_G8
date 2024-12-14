@@ -8,9 +8,10 @@ export class CartController {
   @Post('add')
   addToCart(
     @Body('productId') productId: number,
+    @Body('name') name: string,
     @Body('quantity') quantity: number,
   ): CartItem {
-    return this.cartService.addToCart(productId, quantity);
+    return this.cartService.addToCart(productId, name, quantity);
   }
 
   @Get()
