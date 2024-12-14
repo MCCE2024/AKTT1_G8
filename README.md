@@ -44,6 +44,9 @@ Abschließend einen PR auf `develop` erstellen und ein Review beantragen.
 ## Documentation
 
 Hier wird die Vorgehensweise für das Projekt dokumentiert.
+Die derzeitige Microservic-Architektur sieht wie folgt aus:
+
+![Microservice Architecture](./docs/microservice_architecture.png "Microservice Architecture on Kubernetes")
 
 ### Aufgabe 1
 1. Erstellen eines einfachen index.html als Hello World website.

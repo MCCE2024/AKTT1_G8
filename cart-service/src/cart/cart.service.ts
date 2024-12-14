@@ -4,19 +4,20 @@ import { Injectable } from '@nestjs/common';
 export interface CartItem {
   productId: number;
   quantity: number;
+  name: string;
 }
 
 @Injectable()
 export class CartService {
   private cart: CartItem[] = [];
 
-  addToCart(productId: number, quantity: number = 1): CartItem {
+  addToCart(productId: number, name: string, quantity: number = 1): CartItem {
     const existingItem = this.cart.find(item => item.productId === productId);
 
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      this.cart.push({ productId, quantity });
+      this.cart.push({ productId, name, quantity });
     }
 
     return this.cart.find(item => item.productId === productId)!;

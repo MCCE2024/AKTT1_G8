@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: product-service
-          image: lzainzinger02/product-service:1.1.0
+          image: lzainzinger02/product-service:1.1.1
           env:
             - name: PRODUCTS_JSON
               valueFrom:
