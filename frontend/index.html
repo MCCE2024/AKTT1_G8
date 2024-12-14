@@ -174,6 +174,7 @@
           <button @click="removeFromCart(item.productId)">Remove</button>
         </div>
       </template>
+      <button @click="clearCart()">Clear Cart</button>
     </div>
 
     <!-- Empty Cart Message -->
@@ -188,16 +189,23 @@
       return {
         products: [],
         cart: [],
-        // Determine the base URL based on the environment
-        getBaseUrl() {
-            // If running locally, use localhost with NodePort; otherwise, use the service URL in Kubernetes
-            return window.location.hostname === "localhost"
-              ? "http://localhost:30001"  // Local development using NodePort
-              : "http://product-service:3001"; // Use this when running in Kubernetes
+
+        // Determine the base URL for services
+        getBaseUrl(service) {
+          const baseUrls = {
+            product: window.location.hostname === "localhost"
+              ? "http://localhost:30001"
+              : "http://product-service:3001",
+            cart: window.location.hostname === "localhost"
+              ? "http://localhost:30002"
+              : "http://cart-service:3002"
+          };
+          return baseUrls[service];
         },
+        // Fetch products from product-service
         async fetchProducts() {
           try {
-            const response = await fetch(`${this.getBaseUrl()}/products`);  // Use the dynamic base URL
+            const response = await fetch(`${this.getBaseUrl('product')}/products`);  // Use the dynamic base URL
             if (response.ok) {
               this.products = await response.json();
             } else {
@@ -207,19 +215,72 @@
             console.error('Error fetching products:', error);
           }
         },
-        addToCart(product) {
-          const existingItem = this.cart.find(item => item.productId === product.id);
-          if (existingItem) {
-            existingItem.quantity += 1;
-          } else {
-            this.cart.push({ productId: product.id, quantity: 1, product });
+        // Fetch cart from cart-service
+        async fetchCart() {
+          try {
+            const response = await fetch(`${this.getBaseUrl('cart')}/cart`);
+            if (response.ok) {
+              this.cart = await response.json();
+            } else {
+              console.error('Failed to fetch cart');
+            }
+          } catch (error) {
+            console.error('Error fetching cart:', error);
           }
         },
-        removeFromCart(productId) {
-          this.cart = this.cart.filter(item => item.productId !== productId);
+        // Add product to cart
+        async addToCart(product) {
+          try {
+            const response = await fetch(`${this.getBaseUrl('cart')}/cart/add`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ productId: product.id, quantity: 1 })
+            });
+            if (response.ok) {
+              console.log(`${product.name} added to cart`);
+              this.fetchCart();  // Refresh cart after adding item
+            } else {
+              console.error('Failed to add product to cart');
+            }
+          } catch (error) {
+            console.error('Error adding product to cart:', error);
+          }
+        },
+        // Remove a product from the cart
+        async removeFromCart(productId) {
+          try {
+            const response = await fetch(`${this.getBaseUrl('cart')}/cart/${productId}`, {
+              method: 'DELETE'
+            });
+            if (response.ok) {
+              console.log(`Product with ID ${productId} removed from cart`);
+              this.fetchCart();  // Refresh cart after removing item
+            } else {
+              console.error('Failed to remove product from cart');
+            }
+          } catch (error) {
+            console.error('Error removing product from cart:', error);
+          }
+        },
+        // Clear the entire cart
+        async clearCart() {
+          try {
+            const response = await fetch(`${this.getBaseUrl('cart')}/cart`, {
+              method: 'DELETE'
+            });
+            if (response.ok) {
+              console.log('Cart cleared');
+              this.fetchCart();  // Refresh cart after clearing
+            } else {
+              console.error('Failed to clear cart');
+            }
+          } catch (error) {
+            console.error('Error clearing cart:', error);
+          }
         },
         init() {
           this.fetchProducts();
+          this.fetchCart();
         }
       };
     }

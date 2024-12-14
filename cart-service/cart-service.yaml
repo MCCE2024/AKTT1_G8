@@ -1,18 +1,3 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-    name: cart-service
-    namespace: aktt1
-data:
-  # Configuration for cart size limit (optional, if required)
-  MAX_CART_SIZE: "100"
-  # `cart.json` data to be read by the app
-  cart.json: |
-    [
-      { "productId": 1, "quantity": 2 },
-      { "productId": 2, "quantity": 1 }
-    ]
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -30,13 +15,7 @@ spec:
     spec:
       containers:
         - name: cart-service
-          image: ctadeshsb/cart-service:1.1.0
-          env:
-            - name: CART_CONFIG_PATH
-              value: /etc/config/cart.json  # This should point to where the ConfigMap file is mounted
-          volumeMounts:
-            - name: cart-config
-              mountPath: /etc/config  # Mount the ConfigMap data as a volume
+          image: lzainzinger02/cart-service:1.1.1
           ports:
             - containerPort: 3000
           resources:
@@ -63,3 +42,5 @@ spec:
     - protocol: TCP
       port: 3002
       targetPort: 3000
+      nodePort: 30002
+  type: NodePort

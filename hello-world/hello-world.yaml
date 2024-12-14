@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: lzainzinger02/hello-world:1.1.0
+        image: lzainzinger02/hello-world:1.1.1
         ports:
         - containerPort: 80
         resources:
