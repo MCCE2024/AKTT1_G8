@@ -169,7 +169,7 @@
     <div class="cart" x-show="cart.length > 0">
       <template x-for="item in cart" :key="item.productId">
         <div class="cart-item">
-          <p x-text="item.product.name"></p>
+          <p x-text="item.name"></p>
           <p x-text="'Quantity: ' + item.quantity"></p>
           <button @click="removeFromCart(item.productId)">Remove</button>
         </div>
@@ -234,7 +234,7 @@
             const response = await fetch(`${this.getBaseUrl('cart')}/cart/add`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ productId: product.id, quantity: 1 })
+              body: JSON.stringify({ productId: product.id, name: product.name, quantity: 1 })
             });
             if (response.ok) {
               console.log(`${product.name} added to cart`);
