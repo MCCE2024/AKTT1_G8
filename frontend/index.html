@@ -282,9 +282,157 @@
           this.fetchProducts();
           this.fetchCart();
         }
+        async processPayment() {
+        try {
+          const response = await fetch(`${this.getBaseUrl('payment')}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cartServiceUrl: this.getBaseUrl('cart') })
+          });
+
+          if (response.ok) {
+            this.paymentResult = await response.json();
+            console.log('Payment successful:', this.paymentResult);
+          } else {
+            console.error('Payment failed');
+          }
+        } catch (error) {
+          console.error('Error processing payment:', error);
+        }
+      },
+
+      init() {
+        this.fetchProducts();
+        this.fetchCart();
+      }
       };
     }
   </script>
 
+
+// Payment
+<div x-data="productApp()" x-init="init()">
+  <h1>Product List</h1>
+  <ul>
+    <template x-for="product in products" :key="product.id">
+      <li>
+        <strong x-text="product.name"></strong> - $<span x-text="product.price"></span>
+        <button @click="addToCart(product)">Add to Cart</button>
+      </li>
+    </template>
+  </ul>
+
+  <h1>Cart</h1>
+  <ul>
+    <template x-for="item in cart" :key="item.productId">
+      <li>
+        <strong x-text="item.product.name"></strong> - Quantity: <span x-text="item.quantity"></span>
+        <button @click="removeFromCart(item.productId)">Remove</button>
+      </li>
+    </template>
+  </ul>
+  <button @click="clearCart()">Clear Cart</button>
+
+  <h1>Payment</h1>
+  <button @click="processPayment()">Pay Now</button>
+  <div x-show="paymentResult">
+    <p><strong>Payment Status:</strong> <span x-text="paymentResult.status"></span></p>
+    <p><strong>Payment ID:</strong> <span x-text="paymentResult.paymentId"></span></p>
+    <p><strong>Amount Paid:</strong> $<span x-text="paymentResult.amount"></span></p>
+  </div>
+</div>
+
+<script>
+function productApp() {
+  return {
+    products: [],
+    cart: [],
+    paymentResult: null,
+
+    getBaseUrl(service) {
+      const baseUrls = {
+        product: window.location.hostname === "localhost"
+          ? "http://localhost:30001"
+          : "http://product-service:3001",
+        cart: window.location.hostname === "localhost"
+          ? "http://localhost:30002"
+          : "http://cart-service:3002",
+        payment: window.location.hostname === "localhost"
+          ? "http://localhost:30003"
+          : "http://payment-service:3003"
+      };
+      return baseUrls[service];
+    },
+
+    async fetchProducts() {
+      try {
+        const response = await fetch(`${this.getBaseUrl('product')}/products`);
+        if (response.ok) {
+          this.products = await response.json();
+        } else {
+          console.error('Failed to fetch products');
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    },
+
+    async fetchCart() {
+      try {
+        const response = await fetch(`${this.getBaseUrl('cart')}`);
+        if (response.ok) {
+          this.cart = await response.json();
+        } else {
+          console.error('Failed to fetch cart');
+        }
+      } catch (error) {
+        console.error('Error fetching cart:', error);
+      }
+    },
+
+    async addToCart(product) {
+      try {
+        const response = await fetch(`${this.getBaseUrl('cart')}/add`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productId: product.id, quantity: 1 })
+        });
+        if (response.ok) {
+          console.log(`${product.name} added to cart`);
+          this.fetchCart();
+        } else {
+          console.error('Failed to add product to cart');
+        }
+      } catch (error) {
+        console.error('Error adding product to cart:', error);
+      }
+    },
+
+    async processPayment() {
+      try {
+        const response = await fetch(`${this.getBaseUrl('payment')}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cartServiceUrl: this.getBaseUrl('cart') })
+        });
+
+        if (response.ok) {
+          this.paymentResult = await response.json();
+          console.log('Payment successful:', this.paymentResult);
+        } else {
+          console.error('Payment failed');
+        }
+      } catch (error) {
+        console.error('Error processing payment:', error);
+      }
+    },
+
+    init() {
+      this.fetchProducts();
+      this.fetchCart();
+    }
+  };
+}
+</script>
 </body>
 </html>

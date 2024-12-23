@@ -28,4 +28,10 @@ export class CartController {
   clearCart(): CartItem[] {
     return this.cartService.clearCart();
   }
+
+  @Get('total')
+  getTotalPrice(): { totalPrice: number } {
+    const totalPrice = this.cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+    return { totalPrice };
+  }
 }
