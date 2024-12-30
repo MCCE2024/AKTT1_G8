@@ -139,6 +139,36 @@
       margin-top: 20px;
     }
 
+    .btn-clear,
+    .btn-pay {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-clear {
+      background-color: #f44336; /* Red color */
+      color: white;
+    }
+
+    .btn-clear:hover {
+      background-color: #d32f2f; /* Darker red */
+      transform: scale(1.05);
+    }
+
+    .btn-pay {
+      background-color: #4caf50; /* Green color */
+      color: white;
+    }
+
+    .btn-pay:hover {
+      background-color: #388e3c; /* Darker green */
+      transform: scale(1.05);
+    }
+
     /* Responsive Styling */
     @media (max-width: 768px) {
       .product-list {
@@ -174,12 +204,21 @@
           <button @click="removeFromCart(item.productId)">Remove</button>
         </div>
       </template>
-      <button @click="clearCart()">Clear Cart</button>
+      <h3>Cart Total: $<span x-text="cartTotal"></span></h3>
+      <button @click="clearCart()" class="btn-clear">Clear Cart</button>
     </div>
 
     <!-- Empty Cart Message -->
     <div class="empty-cart" x-show="cart.length === 0">
       Your cart is empty.
+    </div>
+
+    <h2>Payment</h2>
+    <button @click="processPayment()" class="btn-pay">Pay Now</button>
+    <div x-show="paymentResult">
+      <p><strong>Payment Status:</strong> <span x-text="paymentResult.status"></span></p>
+      <p><strong>Payment ID:</strong> <span x-text="paymentResult.paymentId"></span></p>
+      <p><strong>Amount Paid:</strong> $<span x-text="paymentResult.amount"></span></p>
     </div>
 
   </div>
@@ -189,6 +228,8 @@
       return {
         products: [],
         cart: [],
+        cartTotal: 0,
+        paymentResult: null,
 
         // Determine the base URL for services
         getBaseUrl(service) {
@@ -198,7 +239,10 @@
               : "http://product-service:3001",
             cart: window.location.hostname === "localhost"
               ? "http://localhost:30002"
-              : "http://cart-service:3002"
+              : "http://cart-service:3002",
+            payment: window.location.hostname === "localhost"
+              ? "http://localhost:30003"
+              : "http://cart-service:3003"
           };
           return baseUrls[service];
         },
@@ -221,6 +265,7 @@
             const response = await fetch(`${this.getBaseUrl('cart')}/cart`);
             if (response.ok) {
               this.cart = await response.json();
+              this.fetchCartTotal(); // Fetch the updated cart total
             } else {
               console.error('Failed to fetch cart');
             }
@@ -228,13 +273,26 @@
             console.error('Error fetching cart:', error);
           }
         },
+        async fetchCartTotal() {
+        try {
+          const response = await fetch(`${this.getBaseUrl('cart')}/cart/total`);
+          if (response.ok) {
+            const data = await response.json();
+            this.cartTotal = data.totalPrice;
+          } else {
+            console.error('Failed to fetch cart total');
+          }
+        } catch (error) {
+          console.error('Error fetching cart total:', error);
+        }
+      },
         // Add product to cart
         async addToCart(product) {
           try {
             const response = await fetch(`${this.getBaseUrl('cart')}/cart/add`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ productId: product.id, name: product.name, quantity: 1 })
+              body: JSON.stringify({ productId: product.id, name: product.name, quantity: 1, price: product.price })
             });
             if (response.ok) {
               console.log(`${product.name} added to cart`);
@@ -278,6 +336,25 @@
             console.error('Error clearing cart:', error);
           }
         },
+        async processPayment() {
+          try {
+            const response = await fetch(`${this.getBaseUrl('payment')}/payment`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ cartID: Math.random().toString(8)})
+            });
+          
+            if (response.ok) {
+              this.paymentResult = await response.json();
+              console.log('Payment successful:', this.paymentResult);
+              this.clearCart();
+            } else {
+              console.error('Payment failed');
+            }
+          } catch (error) {
+            console.error('Error processing payment:', error);
+          }
+        },
         init() {
           this.fetchProducts();
           this.fetchCart();
@@ -285,6 +362,5 @@
       };
     }
   </script>
-
 </body>
 </html>

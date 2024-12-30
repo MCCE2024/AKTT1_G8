@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: cart-service
-          image: lzainzinger02/cart-service:1.1.1
+          image: lzainzinger02/cart-service:1.2.0
           ports:
             - containerPort: 3000
           resources:
@@ -25,10 +25,6 @@ spec:
             limits:
               cpu: 500m
               memory: 256Mi
-      volumes:
-        - name: cart-config
-          configMap:
-            name: cart-service
 ---
 apiVersion: v1
 kind: Service
