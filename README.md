@@ -12,7 +12,7 @@ Dieses Repository beinhaltet alle benötigten Abgabedokumente für das Projekt d
 
 - ~~Aufgabe 2: Versucht eine Applikation zu entwickeln, welche aus mehreren (mind. 3) Services besteht und schreibt ein Kubernetes Manifest dafür.~~
 
-- Aufgabe 3: Schaut euch die Kubernetes Application Security Checklist an und implementiert 2-3 Aspekte in eurem Manifest.
+- ~~Aufgabe 3: Schaut euch die Kubernetes Application Security Checklist an und implementiert 2-3 Aspekte in eurem Manifest.~~
 
 - Aufgabe 4: Templating (10 % der Beurteilung, optional)
 
