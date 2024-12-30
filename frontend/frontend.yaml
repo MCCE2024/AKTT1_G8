@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:latest  # Replace with your image name and tag
-        imagePullPolicy: Never
+        image: lzainzinger02/frontend:1.2.0
         ports:
         - containerPort: 80
         resources:
