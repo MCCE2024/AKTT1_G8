@@ -88,8 +88,24 @@ lzainzinger@MacBook-Air-von-Lukas AKTT1_G8 % curl 127.0.0.1:3005/products
 [{"id":1,"name":"Product A","price":100},{"id":2,"name":"Product B","price":200}]% 
 ```
 5. Interaktion zwischen Microservices entwickeln.
+Durch HTTP/API Calls wie:
+```javascript
+const cartResponse = await lastValueFrom(
+    this.httpService.get(`http://cart-service:3002/cart/total`)
+);
+```
 6. Testen der gesamten Applikation.
+Testen der Applikation via Frontend [localhost:8086](http://localhost:8086/).
+- Werden Produkte angezeigt? ✅
+- Können Produkte im Einkaufswagen hinzugefügt werden? ✅
+- Können Produkte aus dem Einkaufswagen entfernt werden? ✅
+- Kann der gesamte Einkaufswagen auf einmal geleert werden? ✅
+- Ist eine Bezahlung möglich? ✅
 7. Applikation Optimieren und 12 Factor App berücksichtigen.
+
+### Aufgabe 3
+- Application Design
+  - All Applications have QoS class for request and limit of resources. ✅
 
 ## Authors
 Gruppe 8
