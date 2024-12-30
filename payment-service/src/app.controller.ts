@@ -7,13 +7,13 @@ export class PaymentController {
   constructor(private readonly httpService: HttpService) {}
 
   @Post()
-  async processPayment(@Body('cartServiceUrl') cartServiceUrl: string): Promise<any> {
+  async processPayment(@Body('cartID') cartID: number): Promise<any> {
     try {
       // Fetch total price from cart service
       const cartResponse = await lastValueFrom(
-        this.httpService.get(`${cartServiceUrl}/total`)
+        this.httpService.get(`http://cart-service:3002/cart/total`)
       );
-
+      console.log("Total price: ", cartResponse)
       const totalPrice = cartResponse.data.totalPrice;
 
       // Simulate payment process
@@ -21,8 +21,8 @@ export class PaymentController {
         throw new HttpException('Invalid total price', HttpStatus.BAD_REQUEST);
       }
 
-      const paymentId = Math.random().toString(36).substr(2, 9);
-      console.log(`Processing payment for $${totalPrice}`);
+      const paymentId = Math.random().toString(36).substring(2, 9);
+      console.log(`Processing payment for cart ID ${cartID} with total price $${totalPrice}`);
 
       return {
         status: 'success',

@@ -10,8 +10,9 @@ export class CartController {
     @Body('productId') productId: number,
     @Body('name') name: string,
     @Body('quantity') quantity: number,
+    @Body('price') price: number,
   ): CartItem {
-    return this.cartService.addToCart(productId, name, quantity);
+    return this.cartService.addToCart(productId, name, quantity, price);
   }
 
   @Get()
@@ -31,7 +32,16 @@ export class CartController {
 
   @Get('total')
   getTotalPrice(): { totalPrice: number } {
-    const totalPrice = this.cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+    const cartItems = this.cartService.getCart();
+
+    console.log("Cart Items: ", cartItems)
+
+    const totalPrice = cartItems.reduce((accumulator, item) => {
+      return accumulator + item.price * item.quantity;
+    }, 0);
+
+    console.log("Total Price: ", totalPrice)
+
     return { totalPrice };
   }
 }

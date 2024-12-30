@@ -15,9 +15,17 @@ spec:
     spec:
       containers:
       - name: payment-service
-        image: lzainzinger02/payment-service:1.1.1  
+        image: payment-service:latest
+        imagePullPolicy: Never
         ports:
-        - containerPort: 3003
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
 ---
 apiVersion: v1
 kind: Service
@@ -30,5 +38,6 @@ spec:
   ports:
     - protocol: TCP
       port: 3003
-      targetPort: 3003
+      targetPort: 3000
+      nodePort: 30003
   type: NodePort
