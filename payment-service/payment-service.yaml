@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  namespace: aktt1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+      - name: payment-service
+        image: lzainzinger02/payment-service:1.2.0
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: 250m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  namespace: aktt1
+spec:
+  selector:
+    app: payment-service
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3000
+      nodePort: 30003
+  type: NodePort
