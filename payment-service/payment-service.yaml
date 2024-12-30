@@ -1,3 +1,9 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: payment-service-sa
+  namespace: aktt1
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,6 +19,8 @@ spec:
       labels:
         app: payment-service
     spec:
+      serviceAccountName: payment-service-sa
+      automountServiceAccountToken: false
       containers:
       - name: payment-service
         image: lzainzinger02/payment-service:1.2.0
@@ -20,11 +28,16 @@ spec:
         - containerPort: 3000
         resources:
           requests:
-            cpu: 250m
+            cpu: 100m
             memory: 128Mi
           limits:
             cpu: 500m
             memory: 256Mi
+        securityContext:
+          # Disabling privilege escalation
+          allowPrivilegeEscalation: false
+          # Ensure the container doesn't run with privileged access
+          privileged: false
 ---
 apiVersion: v1
 kind: Service

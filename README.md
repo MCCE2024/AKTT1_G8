@@ -12,7 +12,7 @@ Dieses Repository beinhaltet alle benötigten Abgabedokumente für das Projekt d
 
 - ~~Aufgabe 2: Versucht eine Applikation zu entwickeln, welche aus mehreren (mind. 3) Services besteht und schreibt ein Kubernetes Manifest dafür.~~
 
-- Aufgabe 3: Schaut euch die Kubernetes Application Security Checklist an und implementiert 2-3 Aspekte in eurem Manifest.
+- ~~Aufgabe 3: Schaut euch die Kubernetes Application Security Checklist an und implementiert 2-3 Aspekte in eurem Manifest.~~
 
 - Aufgabe 4: Templating (10 % der Beurteilung, optional)
 
@@ -88,8 +88,32 @@ lzainzinger@MacBook-Air-von-Lukas AKTT1_G8 % curl 127.0.0.1:3005/products
 [{"id":1,"name":"Product A","price":100},{"id":2,"name":"Product B","price":200}]% 
 ```
 5. Interaktion zwischen Microservices entwickeln.
+Durch HTTP/API Calls wie:
+```javascript
+const cartResponse = await lastValueFrom(
+    this.httpService.get(`http://cart-service:3002/cart/total`)
+);
+```
 6. Testen der gesamten Applikation.
+Testen der Applikation via Frontend [localhost:8086](http://localhost:8086/).
+- Werden Produkte angezeigt? ✅
+- Können Produkte im Einkaufswagen hinzugefügt werden? ✅
+- Können Produkte aus dem Einkaufswagen entfernt werden? ✅
+- Kann der gesamte Einkaufswagen auf einmal geleert werden? ✅
+- Ist eine Bezahlung möglich? ✅
 7. Applikation Optimieren und 12 Factor App berücksichtigen.
+
+### Aufgabe 3
+- Application Design
+  - All Applications have QoS class for request and limit of resources. ✅
+- Service Account
+  - Avoid using the default ServiceAccount. Instead, create ServiceAccounts for each workload or microservice. ✅
+  - automountServiceAccountToken should be set to false unless the pod specifically requires access to the Kubernetes API to operate. ✅
+- Container-level securityContext recommendations
+  - Disable privilege escalations using allowPrivilegeEscalation: false. ✅
+  - Configure the root filesystem to be read-only with readOnlyRootFilesystem: true. ❌
+  - Avoid running privileged containers (set privileged: false). ✅
+  - Drop all capabilities from the containers and add back only specific ones that are needed for operation of the container. ❌
 
 ## Authors
 Gruppe 8
