@@ -23,6 +23,7 @@ spec:
         app: hello-world
     spec:
       serviceAccountName: hello-world-sa
+      automountServiceAccountToken: false
       containers:
       - name: hello-world
         image: lzainzinger02/hello-world:1.2.0

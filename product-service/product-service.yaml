@@ -32,6 +32,7 @@ spec:
         app: product-service
     spec:
       serviceAccountName: product-service-sa
+      automountServiceAccountToken: false
       containers:
         - name: product-service
           image: lzainzinger02/product-service:1.2.0

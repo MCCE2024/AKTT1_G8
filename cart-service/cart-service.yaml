@@ -20,6 +20,7 @@ spec:
         app: cart-service
     spec:
       serviceAccountName: cart-service-sa
+      automountServiceAccountToken: false
       containers:
         - name: cart-service
           image: lzainzinger02/cart-service:1.2.0

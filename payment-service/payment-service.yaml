@@ -20,6 +20,7 @@ spec:
         app: payment-service
     spec:
       serviceAccountName: payment-service-sa
+      automountServiceAccountToken: false
       containers:
       - name: payment-service
         image: lzainzinger02/payment-service:1.2.0

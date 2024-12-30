@@ -22,6 +22,7 @@ spec:
         app: frontend
     spec:
       serviceAccountName: frontend-sa
+      automountServiceAccountToken: false
       containers:
       - name: frontend
         image: lzainzinger02/frontend:1.2.0
