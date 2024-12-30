@@ -108,7 +108,7 @@ Testen der Applikation via Frontend [localhost:8086](http://localhost:8086/).
   - All Applications have QoS class for request and limit of resources. ✅
 - Service Account
   - Avoid using the default ServiceAccount. Instead, create ServiceAccounts for each workload or microservice. ✅
-  - automountServiceAccountToken should be set to false unless the pod specifically requires access to the Kubernetes API to operate.
+  - automountServiceAccountToken should be set to false unless the pod specifically requires access to the Kubernetes API to operate. ✅
 - Pod-level securityContext recommendations
   - Set runAsNonRoot: true.
   - Configure the container to execute as a less privileged user (for example, using runAsUser and runAsGroup), and configure appropriate permissions on files or directories inside the container image.
