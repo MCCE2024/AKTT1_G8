@@ -347,6 +347,7 @@
             if (response.ok) {
               this.paymentResult = await response.json();
               console.log('Payment successful:', this.paymentResult);
+              this.clearCart();
             } else {
               console.error('Payment failed');
             }
