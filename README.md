@@ -109,11 +109,11 @@ Testen der Applikation via Frontend [localhost:8086](http://localhost:8086/).
 - Service Account
   - Avoid using the default ServiceAccount. Instead, create ServiceAccounts for each workload or microservice. ✅
   - automountServiceAccountToken should be set to false unless the pod specifically requires access to the Kubernetes API to operate. ✅
-- Pod-level securityContext recommendations
-  - Set runAsNonRoot: true.
-  - Configure the container to execute as a less privileged user (for example, using runAsUser and runAsGroup), and configure appropriate permissions on files or directories inside the container image.
-  - Optionally add a supplementary group with fsGroup to access persistent volumes. ✅
-  - The application deploys into a namespace that enforces an appropriate Pod security standard. If you cannot control this enforcement for the cluster(s) where the application is deployed, take this into account either through documentation or additional defense in depth.
+- Container-level securityContext recommendations
+  - Disable privilege escalations using allowPrivilegeEscalation: false. ✅
+  - Configure the root filesystem to be read-only with readOnlyRootFilesystem: true. ❌
+  - Avoid running privileged containers (set privileged: false). ✅
+  - Drop all capabilities from the containers and add back only specific ones that are needed for operation of the container. ❌
 
 ## Authors
 Gruppe 8
