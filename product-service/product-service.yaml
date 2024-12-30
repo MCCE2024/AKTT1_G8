@@ -1,4 +1,10 @@
 apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: product-service-sa
+  namespace: aktt1
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: product-service
@@ -25,6 +31,7 @@ spec:
       labels:
         app: product-service
     spec:
+      serviceAccountName: product-service-sa
       containers:
         - name: product-service
           image: lzainzinger02/product-service:1.2.0

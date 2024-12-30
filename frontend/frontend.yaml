@@ -1,3 +1,9 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: frontend-sa
+  namespace: aktt1
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,6 +21,7 @@ spec:
       labels:
         app: frontend
     spec:
+      serviceAccountName: frontend-sa
       containers:
       - name: frontend
         image: lzainzinger02/frontend:1.2.0

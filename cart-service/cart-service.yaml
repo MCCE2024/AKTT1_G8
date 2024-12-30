@@ -1,3 +1,9 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cart-service-sa
+  namespace: aktt1
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,6 +19,7 @@ spec:
       labels:
         app: cart-service
     spec:
+      serviceAccountName: cart-service-sa
       containers:
         - name: cart-service
           image: lzainzinger02/cart-service:1.2.0
