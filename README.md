@@ -3,8 +3,9 @@
 
 Dieses Repository beinhaltet alle benötigten Abgabedokumente für das Projekt der Lehrveranstaltung AKTT1.
 
-
-
+## Installation
+To install all Applications using helm, be sure to have helm installed and then run the `helm_install_all.sh` script, found in the root directory of this repository.
+This script installs all Services of this project on the Kubernetes Cluster in the `aktt1` Namespace.
 
 ## Roadmap
 
