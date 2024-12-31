@@ -14,7 +14,7 @@ Dieses Repository beinhaltet alle benötigten Abgabedokumente für das Projekt d
 
 - ~~Aufgabe 3: Schaut euch die Kubernetes Application Security Checklist an und implementiert 2-3 Aspekte in eurem Manifest.~~
 
-- Aufgabe 4: Templating (10 % der Beurteilung, optional)
+- ~~Aufgabe 4: Templating (10 % der Beurteilung, optional)~~
 
 ## Contributing
 
@@ -114,6 +114,10 @@ Testen der Applikation via Frontend [localhost:8086](http://localhost:8086/).
   - Configure the root filesystem to be read-only with readOnlyRootFilesystem: true. ❌
   - Avoid running privileged containers (set privileged: false). ✅
   - Drop all capabilities from the containers and add back only specific ones that are needed for operation of the container. ❌
+
+### Aufgabe 4
+Für Aufgabe 4 - Templating - Haben wir uns dazu entschlossen, für alle NodeJS Applikationen, also unsere Microservices, ein Helm-Chhart zu bauen und diese mit Service-Bezifischen Overlays zu konfigurieren. Das Chart sowie die Overlays befinden sich in `Charts/node-microservice-chart`.
+Allerdings gab es beim Erstellen der Config-Map immer Probleme, weshalb diese nur vie Kubernetes-Manifest angelegt wird (betrifft nur das Product-Service). 
 
 ## Authors
 Gruppe 8
