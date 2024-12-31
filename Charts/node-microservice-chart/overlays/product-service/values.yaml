@@ -1,0 +1,9 @@
+name: product-service
+image:
+  repository: lzainzinger02/product-service
+service:
+  port: 3001
+  nodePort: 30001
+configMap:
+  enabled: true
+  name: product-service

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: product-service
+  namespace: aktt1
+data:
+  products.json: |
+    [
+      {"id": 1, "name": "Product A", "price": 100},
+      {"id": 2, "name": "Product B", "price": 200}
+    ]

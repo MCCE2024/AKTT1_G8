@@ -1,0 +1,6 @@
+name: payment-service
+image:
+  repository: lzainzinger02/payment-service
+service:
+  port: 3003
+  nodePort: 30003
