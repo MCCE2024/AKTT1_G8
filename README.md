@@ -7,6 +7,8 @@ Dieses Repository beinhaltet alle benötigten Abgabedokumente für das Projekt d
 To install all Applications using helm, be sure to have helm installed and then run the `helm_install_all.sh` script, found in the root directory of this repository.
 This script installs all Services of this project on the Kubernetes Cluster in the `aktt1` Namespace.
 
+If you don't want to use Helm you can deploy every application using `kubectl apply -f` using the Kubernetes Manifest included in every service directory.
+
 ## Roadmap
 
 - ~~Aufgabe 1: Schreibt eine sehr einfache Applikation (Hello World oder ähnliches in irgendeiner Sprache), containerisiert diese und schreibt einmal ein Kubernetes Manifest dafür.~~
