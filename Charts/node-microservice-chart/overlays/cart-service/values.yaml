@@ -1,0 +1,6 @@
+name: cart-service
+image:
+  repository: lzainzinger02/cart-service
+service:
+  port: 3002
+  nodePort: 30002
