@@ -4,10 +4,36 @@
 Dieses Repository beinhaltet alle benötigten Abgabedokumente für das Projekt der Lehrveranstaltung AKTT1.
 
 ## Installation
-To install all Applications using helm, be sure to have helm installed and then run the `helm_install_all.sh` script, found in the root directory of this repository.
+To install all Applications using helm, be sure to `have helm installed` and `kubectl set up correctly` and then run the `helm_install_all.sh` script, found in the root directory of this repository. Be sure to have the file executable by running `chmod +x helm_install_all.sh`.
 This script installs all Services of this project on the Kubernetes Cluster in the `aktt1` Namespace.
 
+You can also manually install the helm charts by running:
+```bash
+helm upgrade --install payment-service ./Charts/node-microservice-chart \
+    -f ./Charts/node-microservice-chart/values.yaml \
+    -f ./Charts/node-microservice-chart/overlays/payment-service/values.yaml \
+    --namespace=aktt1
+```
+
+This is possible for:
+- cart-service
+- payment-service
+- product-service
+
+Frontend Services have to be applied using `kubectl apply -f <path/to/file>`.
+- frontend
+- hello-world
+
+See steps below.
+
 If you don't want to use Helm you can deploy every application using `kubectl apply -f` using the Kubernetes Manifest included in every service directory.
+```bash 
+./frontend/frontend.yaml
+./hello-world/hello-world.yaml
+./cart-service/cart-service.yaml
+./payment-service/payment-service.yaml
+./product-service/product-service.yaml
+```
 
 ## Roadmap
 
