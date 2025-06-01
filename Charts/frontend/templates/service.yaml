@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "frontend.fullname" . }}-service
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "frontend.fullname" . }}
+spec:
+  selector:
+    app: {{ include "frontend.fullname" . }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+  type: {{ .Values.service.type }}

@@ -1,0 +1,21 @@
+fullnameOverride: frontend
+
+image:
+  repository: lzainzinger02/frontend
+  tag: "1.2.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 8086
+  targetPort: 80
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+namespace: aktt1
