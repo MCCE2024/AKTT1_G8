@@ -1,35 +1,37 @@
+namespace: webshop
 cart-service:
-  fullnameOverride: cart-service
+  name: cart-service
+  namespace: webshop
   image:
     repository: lzainzinger02/cart-service
-    tag: "1.2.0"
   service:
     port: 3002
-    type: NodePort
     nodePort: 30002
 
 payment-service:
-  fullnameOverride: payment-service
+  name: payment-service
+  namespace: webshop
   image:
     repository: lzainzinger02/payment-service
-    tag: "1.2.0"
   service:
     port: 3003
-    type: NodePort
     nodePort: 30003
 
 product-service:
-  fullnameOverride: product-service
+  name: product-service
+  namespace: webshop
   image:
     repository: lzainzinger02/product-service
-    tag: "1.2.0"
   service:
     port: 3001
-    type: NodePort
     nodePort: 30001
+  configMap:
+    enabled: true
+    name: product-service
 
 frontend:
   fullnameOverride: frontend
+  namespace: webshop
   image:
     repository: lzainzinger02/frontend
     tag: "1.2.0"

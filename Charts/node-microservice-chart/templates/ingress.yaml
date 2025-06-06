@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ .Values.name }}-{{ .Values.namespace }}-ingress"
+  namespace: {{ .Values.namespace }}
+  # --- Add this annotation ---
+  annotations:
+    # This tells ExternalDNS what hostname to create.
+    # It will automatically point to the Ingress's load balancer IP.
+    external-dns.alpha.kubernetes.io/hostname: "{{ .Values.name }}.{{ .Values.namespace }}.lzainzinger.com"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "{{ .Values.name }}.{{ .Values.namespace }}.lzainzinger.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.name }}
+            port:
+              number: {{ .Values.service.port }}
