@@ -30,11 +30,13 @@ product-service:
     name: product-service
 
 frontend:
-  fullnameOverride: frontend
+  fullnameOverride: frontend # This is used to construct the service name (frontend-service) and hostname (frontend.lzainzinger.com)
   namespace: webshop
   image:
     repository: lzainzinger02/frontend
     tag: "1.2.0"
   service:
-    port: 8086
-    type: LoadBalancer
+    port: 80 # This is the service's port (what the Ingress connects to)
+    nodePort: 30000
+  containerPort: 80 # <-- ADDED: This is the port your frontend application listens on inside its container
+

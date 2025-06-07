@@ -1,14 +1,14 @@
 fullnameOverride: frontend
-
+name: frontend
 image:
   repository: lzainzinger02/frontend
   tag: "1.2.0"
   pullPolicy: IfNotPresent
 
 service:
-  type: LoadBalancer
+  type: NodePort
   port: 8086
-  targetPort: 80
+  nodePort: 3005
 
 resources:
   requests:
