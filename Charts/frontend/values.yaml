@@ -19,3 +19,8 @@ resources:
     memory: 256Mi
 
 namespace: aktt1
+
+env:
+  PRODUCT_SERVICE_URL: "http://product-service:3001"
+  CART_SERVICE_URL: "http://cart-service:3002"
+  PAYMENT_SERVICE_URL: "http://payment-service:3003"

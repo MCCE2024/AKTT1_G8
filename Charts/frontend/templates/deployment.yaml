@@ -22,7 +22,14 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 80
+            - containerPort: 3000
+          env:
+            - name: PRODUCT_SERVICE_URL
+              value: {{ .Values.env.PRODUCT_SERVICE_URL | quote }}
+            - name: CART_SERVICE_URL
+              value: {{ .Values.env.CART_SERVICE_URL | quote }}
+            - name: PAYMENT_SERVICE_URL
+              value: {{ .Values.env.PAYMENT_SERVICE_URL | quote }}
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
