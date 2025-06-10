@@ -1,0 +1,26 @@
+fullnameOverride: frontend
+name: frontend
+image:
+  repository: lzainzinger02/frontend
+  tag: "1.2.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort
+  port: 8086
+  nodePort: 3005
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 250m
+    memory: 256Mi
+
+namespace: aktt1
+
+env:
+  PRODUCT_SERVICE_URL: "http://product-service:3001"
+  CART_SERVICE_URL: "http://cart-service:3002"
+  PAYMENT_SERVICE_URL: "http://payment-service:3003"

@@ -1,0 +1,23 @@
+apiVersion: v2
+name: webshop
+description: A Helm chart for deploying the full webshop stack (frontend + node microservices)
+type: application
+version: 0.1.0
+appVersion: "1.2.0"
+
+dependencies:
+  - name: node-microservice-chart
+    alias: cart-service
+    version: 0.1.0
+    repository: "file://../node-microservice-chart"
+  - name: node-microservice-chart
+    alias: payment-service
+    version: 0.1.0
+    repository: "file://../node-microservice-chart"
+  - name: node-microservice-chart
+    alias: product-service
+    version: 0.1.0
+    repository: "file://../node-microservice-chart"
+  - name: frontend
+    version: 0.1.0
+    repository: "file://../frontend"
