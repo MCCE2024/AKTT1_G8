@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { productId: string } }
+  { params }: { params: Promise<{ productId: number }> }
 ) {
   try {
-    const { productId } = params;
+    const productId = (await params).productId;
     const response = await fetch(`${process.env.CART_SERVICE_URL}/cart/${productId}`, {
       method: 'DELETE',
     });
