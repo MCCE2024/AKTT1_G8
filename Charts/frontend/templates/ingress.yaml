@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "{{ .Values.fullnameOverride }}-ingress" # Use fullnameOverride for consistency
+  name: "{{ .Values.namespace }}-{{ .Values.fullnameOverride }}-ingress" # Use fullnameOverride for consistency
   namespace: {{ .Values.namespace }}
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "{{ .Values.namespace }}.lzainzinger.com" # Use fullnameOverride
@@ -18,7 +18,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.fullnameOverride }}-service # Corrected: Matches the new Service name
+            name: "{{ .Values.namespace }}-{{ .Values.fullnameOverride }}-service" # Corrected: Matches the new Service name
             port:
               number: {{ .Values.service.port }}
   tls:
