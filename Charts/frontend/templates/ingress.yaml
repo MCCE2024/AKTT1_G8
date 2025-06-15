@@ -5,6 +5,7 @@ metadata:
   namespace: {{ .Values.namespace }}
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "{{ .Values.namespace }}.lzainzinger.com" # Use fullnameOverride
+    cert-manager.io/cluster-issuer: letsencrypt-prod # Use the cluster issuer for cert-manager
     meta.helm.sh/release-name: {{ .Release.Name }} # Use Release.Name for the release name
     meta.helm.sh/release-namespace: {{ .Release.Namespace }} # Use Release.Namespace for the release namespace
 spec:
@@ -20,3 +21,7 @@ spec:
             name: {{ .Values.fullnameOverride }}-service # Corrected: Matches the new Service name
             port:
               number: {{ .Values.service.port }}
+  tls:
+  - hosts:
+      - "{{ .Values.namespace }}.lzainzinger.com"
+    secretName: letsencrypt-prod-key
