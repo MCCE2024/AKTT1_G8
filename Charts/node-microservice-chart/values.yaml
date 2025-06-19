@@ -30,3 +30,5 @@ configMap:
   enabled: false
   name: my-service-config
   key: products.json
+
+env: {}
