@@ -6,9 +6,8 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: NodePort
+  type: ClientIP
   port: 8086
-  nodePort: 3005
 
 resources:
   requests:

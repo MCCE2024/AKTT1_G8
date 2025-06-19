@@ -10,6 +10,5 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.containerPort }} # This now relies on values.containerPort
-      nodePort: {{ .Values.service.nodePort | default 0 }}
   selector:
     app: {{ .Values.fullnameOverride }} # Ensure this matches your Deployment's pod labels
