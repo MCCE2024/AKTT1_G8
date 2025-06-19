@@ -6,7 +6,7 @@ image:
   pullPolicy: IfNotPresent
 
 service:
-  type: ClientIP
+  type: ClusterIP
   port: 8086
 
 resources:
