@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.fullnameOverride }}-service # Corrected: Matches the Ingress backend name
+  name: "{{ .Values.namespace }}-{{ .Values.fullnameOverride }}-service" # Corrected: Matches the Ingress backend name
   namespace: {{ .Values.namespace }}
   labels:
     app: {{ .Values.fullnameOverride }} # Ensure this matches your Deployment's pod labels
@@ -10,6 +10,5 @@ spec:
   ports:
     - port: {{ .Values.service.port }}
       targetPort: {{ .Values.containerPort }} # This now relies on values.containerPort
-      nodePort: {{ .Values.service.nodePort | default 0 }}
   selector:
     app: {{ .Values.fullnameOverride }} # Ensure this matches your Deployment's pod labels
