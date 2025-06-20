@@ -1,17 +1,26 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
+import { ConfigService } from '@nestjs/config'; // Import ConfigService
 
 @Controller('payment')
 export class PaymentController {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly configService: ConfigService, // Inject ConfigService
+  ) {}
 
   @Post()
   async processPayment(@Body('cartID') cartID: number): Promise<any> {
     try {
+      const cartServiceUrl = this.configService.get<string>('CART_SERVICE_URL'); // Get the URL from environment variables
+      if (!cartServiceUrl) {
+        throw new Error('CART_SERVICE_URL is not defined in environment variables.');
+      }
+
       // Fetch total price from cart service
       const cartResponse = await lastValueFrom(
-        this.httpService.get(`http://cart-service:3002/cart/total`)
+        this.httpService.get(`${cartServiceUrl}/cart/total`) // Use the environment variable here
       );
       console.log("Total price: ", cartResponse)
       const totalPrice = cartResponse.data.totalPrice;

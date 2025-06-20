@@ -1,0 +1,15 @@
+dependencies:
+- name: node-microservice-chart
+  repository: file://../node-microservice-chart
+  version: 0.1.0
+- name: node-microservice-chart
+  repository: file://../node-microservice-chart
+  version: 0.1.0
+- name: node-microservice-chart
+  repository: file://../node-microservice-chart
+  version: 0.1.0
+- name: frontend
+  repository: file://../frontend
+  version: 0.1.0
+digest: sha256:c10356b3c294b6119af7de9ab199763e44a869b9f849a94182a3b964081861d7
+generated: "2025-06-06T18:46:18.55293+02:00"

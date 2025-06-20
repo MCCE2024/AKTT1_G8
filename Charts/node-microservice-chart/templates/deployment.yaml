@@ -41,3 +41,11 @@ spec:
                   name: product-service
                   key: products.json
           {{- end }}
+          # Add environment variables to the container only if env block is set in values file
+          {{- if .Values.env }}
+          env:
+          {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}

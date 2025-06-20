@@ -231,18 +231,14 @@
         cartTotal: 0,
         paymentResult: null,
 
-        // Determine the base URL for services
+        // Determine the base URL for services using env variables
         getBaseUrl(service) {
+          // Try to read from window.ENV (populated by backend), fallback to default
+          const env = window.ENV || {};
           const baseUrls = {
-            product: window.location.hostname === "localhost"
-              ? "http://localhost:30001"
-              : "http://product-service:3001",
-            cart: window.location.hostname === "localhost"
-              ? "http://localhost:30002"
-              : "http://cart-service:3002",
-            payment: window.location.hostname === "localhost"
-              ? "http://localhost:30003"
-              : "http://cart-service:3003"
+            product: env.PRODUCT_SERVICE_URL || (typeof process !== "undefined" ? process.env.PRODUCT_SERVICE_URL : "http://product-service:3001"),
+            cart: env.CART_SERVICE_URL || (typeof process !== "undefined" ? process.env.CART_SERVICE_URL : "http://cart-service:3002"),
+            payment: env.PAYMENT_SERVICE_URL || (typeof process !== "undefined" ? process.env.PAYMENT_SERVICE_URL : "http://payment-service:3003")
           };
           return baseUrls[service];
         },

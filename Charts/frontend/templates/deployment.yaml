@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "frontend.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ include "frontend.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "frontend.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "frontend.fullname" . }}
+    spec:
+      serviceAccountName: {{ include "frontend.fullname" . }}-sa
+      automountServiceAccountToken: false
+      containers:
+        - name: frontend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PRODUCT_SERVICE_URL
+              value: {{ .Values.env.PRODUCT_SERVICE_URL | quote }}
+            - name: CART_SERVICE_URL
+              value: {{ .Values.env.CART_SERVICE_URL | quote }}
+            - name: PAYMENT_SERVICE_URL
+              value: {{ .Values.env.PAYMENT_SERVICE_URL | quote }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
