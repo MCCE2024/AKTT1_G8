@@ -1,21 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from './prisma/prisma.service';
 
 @Injectable()
 export class ProductService {
   private products: any[];
 
-  constructor() {
-    // Load products from the environment variable
-    const productsJson = process.env.PRODUCTS_JSON;
-    // TODO: It always return empty - FIX NEEDED
-    this.products = productsJson ? JSON.parse(productsJson) : [];
+  constructor(private prisma: PrismaService) {
+
   }
 
-  getAllProducts() {
-    return this.products;
+  async getAllProducts() {
+    return this.prisma.product.findMany();
   }
 
-  getProductById(id: number) {
-    return this.products.find((product) => product.id === id);
+  async getProductById(id: number) {
+    const product = await this.prisma.product.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!product) {
+      throw new NotFoundException(`Product with ID ${id} not found.`);
+    }
+
+    return product;
   }
 }
