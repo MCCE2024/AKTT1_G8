@@ -3,7 +3,7 @@ name: webshop
 description: A Helm chart for deploying the full webshop stack (frontend + node microservices)
 type: application
 version: 0.1.0
-appVersion: "1.2.0"
+appVersion: "1.5.0"
 
 dependencies:
   - name: node-microservice-chart

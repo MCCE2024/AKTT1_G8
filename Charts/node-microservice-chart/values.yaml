@@ -32,3 +32,6 @@ configMap:
   key: products.json
 
 env: {}
+
+secrets: 
+  - my-service-secret

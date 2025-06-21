@@ -49,3 +49,10 @@ spec:
               value: {{ $value | quote }}
           {{- end }}
           {{- end }}
+          {{- if .Values.secrets }}
+          envFrom:
+          {{- range $secret := .Values.secrets }}
+            - secretRef:
+                name: {{ $secret }}
+          {{- end }}
+          {{- end }}
