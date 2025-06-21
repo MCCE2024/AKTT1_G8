@@ -8,4 +8,5 @@ configMap:
   enabled: true
   name: product-service
 secrets:
+  - product-service
   

@@ -26,7 +26,8 @@ product-service:
     enabled: false
     name: product-service
   secrets:
-    - product-service-secret
+    - product-service
+
 frontend:
   fullnameOverride: frontend # This is used to construct the service name (frontend-service) and hostname (frontend.lzainzinger.com)
   namespace: webshop

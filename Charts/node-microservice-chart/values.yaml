@@ -33,5 +33,4 @@ configMap:
 
 env: {}
 
-secrets: 
-  - my-service-secret
+secrets: []
